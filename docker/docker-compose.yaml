@@ -1,0 +1,50 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16.9
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    volumes:
+      - "/home/colby/DigitalPortfolio/db_data:/var/lib/postgresql/data"
+    networks:
+      - digitalapp
+
+  pgadmin:
+    image: dpage/pgadmin4:8.13
+    container_name: pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: colbyx20@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"  
+    # volumes:
+    #   - "/home/colby/DigitalPortfolio/server/index.js:/app/index.js"
+    depends_on: 
+      - postgres
+    networks:
+      - digitalapp
+
+  backend:
+    image: colbyx20/digitalportfolio:v1
+    container_name: backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - "/home/colby/DigitalPortfolio/server/index.js:/app/index.js"
+    networks:
+      - digitalapp
+
+volumes:
+  db_data:
+    driver: local
+
+networks:
+  digitalapp:
+    driver: bridge

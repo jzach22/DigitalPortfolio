@@ -1,10 +1,11 @@
-CREATE database digital_portfolio;
+-- CREATE database digital_portfolio;
+
 CREATE table skills(
      Skillid serial Primary key,
      skill_name varchar(50) NOT NULL,
      expierience int NOT NULL
 );
-CREATE table work_exp(id serial Primary key,
+CREATE table workExp(id serial Primary key,
     company_name varchar(100) NOT NULL,
     job_name varchar(100) NOT NULL,
     start_date Date NOT NULL,

@@ -10,6 +10,12 @@ const work_expDAO = require ("./DAO/Work_expDAO")(pool);
 
 app.use(cors());// security for request and website integrity to avoid third party interfierence
 app.use(express.json());//allows use of json packaging
+
+app.get("/", async (req, res) =>{
+    return res.status(200).json({message:"HITTING WEB PAGE"})
+})
+
+
 // get skills
 app.get("/getSkills", async (req, res) => {
   try {
@@ -17,7 +23,12 @@ app.get("/getSkills", async (req, res) => {
     if (skills.rows.length === 0) {
       return res.status(404).json({ message: "Skills not found" });
     }
-    res.json(skills.rows);
+
+    // res.json(skills.rows[0]);
+    // res.json(skills.rows[0].skillid);
+    // res.json(skills.rows[0].skill_name);
+    res.json(skills.rows[0].expierience);
+
   } catch (err) {
         console.log("there was an error");
     res.status(500).json({ error: "Internal Server Error" });
